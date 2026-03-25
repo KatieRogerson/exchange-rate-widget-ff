@@ -1,109 +1,205 @@
-<style>
-  * {
-    box-sizing: border-box;
-    font-family: Georgia, "Times New Roman", serif;
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exchange Rate</title>
 
-  body {
-    margin: 0;
-    padding: 0;
-    background: transparent;
-  }
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Georgia, "Times New Roman", serif;
+    }
 
-  .widget {
-    width: 100%;
-    max-width: 340px;
-    margin: 0 auto;
-    padding: 22px;
-    border-radius: 24px;
-    background: #f5f3ef;
-    color: #4b443d;
-    box-shadow: 0 8px 24px rgba(120, 108, 96, 0.08);
-    border: 1px solid #ece7e0;
-  }
+    body {
+      margin: 0;
+      padding: 24px;
+      background: transparent;
+    }
 
-  h2 {
-    margin: 0 0 18px 0;
-    font-size: 19px;
-    text-align: center;
-    font-weight: 600;
-    color: #433c35;
-  }
+    .widget {
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      padding: 22px;
+      border-radius: 24px;
+      background: #f5f3ef;
+      color: #4b443d;
+      box-shadow: 0 8px 24px rgba(120, 108, 96, 0.08);
+      border: 1px solid #ece7e0;
+    }
 
-  .field {
-    margin-bottom: 12px;
-  }
+    h2 {
+      margin: 0 0 18px 0;
+      font-size: 20px;
+      text-align: center;
+      font-weight: 500;
+      font-style: italic;
+      color: #433c35;
+    }
 
-  label {
-    display: block;
-    margin-bottom: 7px;
-    font-size: 13px;
-    color: #8b8177;
-    font-weight: 500;
-    letter-spacing: 0.2px;
-  }
+    .field {
+      margin-bottom: 12px;
+    }
 
-  input,
-  select {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 16px;
-    border: 1px solid #e6dfd7;
-    background: #ebe7e1;
-    color: #4b443d;
-    font-size: 15px;
-    outline: none;
-    box-shadow: none;
-  }
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      color: #8b8177;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
 
-  input::placeholder {
-    color: #a49a8f;
-  }
+    input,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid #e6dfd7;
+      background: #ebe7e1;
+      color: #4b443d;
+      font-size: 15px;
+      outline: none;
+      box-shadow: none;
+    }
 
-  .row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
+    input::placeholder {
+      color: #a49a8f;
+    }
 
-  button {
-    width: 100%;
-    padding: 13px;
-    margin-top: 8px;
-    border: 1px solid #ddd5cc;
-    border-radius: 16px;
-    background: #e7e1d8;
-    color: #433c35;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
-  }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
 
-  button:hover {
-    background: #ded7ce;
-  }
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 8px;
+      border: 1px solid #ddd5cc;
+      border-radius: 16px;
+      background: #e7e1d8;
+      color: #433c35;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
 
-  button:active {
-    transform: scale(0.99);
-  }
+    button:hover {
+      background: #ded7ce;
+    }
 
-  .result {
-    margin-top: 16px;
-    padding: 14px;
-    border-radius: 16px;
-    background: #ede8e1;
-    border: 1px solid #e2dbd2;
-    font-size: 15px;
-    text-align: center;
-    min-height: 48px;
-    color: #5a5148;
-  }
+    button:active {
+      transform: scale(0.99);
+    }
 
-  .small {
-    font-size: 12px;
-    color: #9a9085;
-    margin-top: 8px;
-    text-align: center;
-  }
-</style>
+    .result {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 16px;
+      background: #ede8e1;
+      border: 1px solid #e2dbd2;
+      font-size: 15px;
+      text-align: center;
+      min-height: 48px;
+      color: #5a5148;
+    }
+
+    .small {
+      font-size: 12px;
+      color: #9a9085;
+      margin-top: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+    <h2>Exchange Rate</h2>
+
+    <div class="field">
+      <label for="amount">Amount</label>
+      <input type="number" id="amount" value="1" min="0" step="0.01" />
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="fromCurrency">From</label>
+        <select id="fromCurrency">
+          <option value="USD">USD</option>
+          <option value="EUR" selected>EUR</option>
+          <option value="GBP">GBP</option>
+          <option value="CAD">CAD</option>
+          <option value="AUD">AUD</option>
+          <option value="JPY">JPY</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="toCurrency">To</label>
+        <select id="toCurrency">
+          <option value="USD" selected>USD</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+          <option value="CAD">CAD</option>
+          <option value="AUD">AUD</option>
+          <option value="JPY">JPY</option>
+        </select>
+      </div>
+    </div>
+
+    <button onclick="convertCurrency()">Convert</button>
+
+    <div class="result" id="result">Enter an amount and click Convert</div>
+    <div class="small" id="rateInfo"></div>
+  </div>
+
+  <script>
+    async function convertCurrency() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      const from = document.getElementById("fromCurrency").value;
+      const to = document.getElementById("toCurrency").value;
+      const result = document.getElementById("result");
+      const rateInfo = document.getElementById("rateInfo");
+
+      if (isNaN(amount) || amount <= 0) {
+        result.textContent = "Please enter a valid amount.";
+        rateInfo.textContent = "";
+        return;
+      }
+
+      if (from === to) {
+        result.textContent = `${amount.toFixed(2)} ${from} = ${amount.toFixed(2)} ${to}`;
+        rateInfo.textContent = "Same currency selected.";
+        return;
+      }
+
+      result.textContent = "Converting...";
+      rateInfo.textContent = "";
+
+      try {
+        const response = await fetch(`https://open.er-api.com/v6/latest/${from}`);
+        const data = await response.json();
+
+        if (!data.rates || !data.rates[to]) {
+          result.textContent = "Conversion failed. Try again.";
+          rateInfo.textContent = "";
+          return;
+        }
+
+        const rate = data.rates[to];
+        const converted = amount * rate;
+
+        result.textContent = `${amount.toFixed(2)} ${from} = ${converted.toFixed(2)} ${to}`;
+        rateInfo.textContent = `1 ${from} = ${rate.toFixed(4)} ${to}`;
+      } catch (error) {
+        result.textContent = "Unable to fetch exchange rate.";
+        rateInfo.textContent = "";
+      }
+    }
+  </script>
+</body>
+</html>
